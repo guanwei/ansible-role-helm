@@ -18,7 +18,7 @@
     helm_version: "{{ helm_latest_release.json.tag_name[1:] }}"
   when: helm_version == "latest"
 
-- deug: msg="{{ helm_version }}"
+- debug: msg="{{ helm_version }}"
 
 - name: Check if helm is installed
   stat:
