@@ -22,7 +22,7 @@
     path: "/usr/local/bin/helm"
   register: helm_is_installed
 
-- name: Gather currently installed Helm version (if any)
+- name: Gather currently installed Helm version
   shell: /usr/local/bin/helm version --client | awk -F'"' '{print $2}'
   changed_when: false
   register: helm_current_version
