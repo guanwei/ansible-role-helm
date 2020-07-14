@@ -34,7 +34,7 @@
     mode: 0755
   become: true
 
-- name: Install Helm
+- name: Copy Helm binary to '/usr/local/bin'
   copy:
     src: "/tmp/{{ ansible_system | lower }}-{{ go_arch }}/helm"
     dest: "/usr/local/bin/helm"
