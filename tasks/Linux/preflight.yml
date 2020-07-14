@@ -23,8 +23,7 @@
   register: helm_is_installed
 
 - name: Gather currently installed Helm version (if any)
-  shell: >
-    /usr/local/bin/helm version --client --template '{{ if .Version }}{{ .Version }}{{ else }}{{ .Client.SemVer }}{{ end }}'
+  shell: /usr/local/bin/helm version --client | awk -F'"' '{print $2}'
   changed_when: false
   register: helm_current_version
   when: helm_is_installed.stat.exists
