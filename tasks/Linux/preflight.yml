@@ -19,12 +19,12 @@
 
 - name: Check if Helm is installed
   stat:
-    path: "{{ helm_install_dir }}/helm"
+    path: "/usr/local/bin/helm"
   register: helm_is_installed
 
 - name: Gather currently installed Helm version (if any)
   command: >
-    {{ helm_install_dir }}/helm version --client --template '{{ if .Version }}{{ .Version }}{{ else }}{{ .Client.SemVer }}{{ end }}'
+    /usr/local/bin/helm version --client --template '{{ if .Version }}{{ .Version }}{{ else }}{{ .Client.SemVer }}{{ end }}'
   changed_when: false
   register: helm_current_version
   when: helm_is_installed.stat.exists
