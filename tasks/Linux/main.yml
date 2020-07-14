@@ -1,44 +1,6 @@
 ---
-- name: Get latest release
-  uri:
-    url: "https://api.github.com/repos/helm/helm/releases/latest"
-    method: GET
-    return_content: true
-    status_code: 200
-    body_format: json
-    validate_certs: false
-  register: helm_latest_release
-  until: helm_latest_release.status == 200
-  retries: 3
-  when: helm_version == "latest"
+- import_tasks: preflight.yml
 
-- name: Set helm version to {{ helm_latest_release.json.tag_name[1:] }}
-  set_fact:
-    helm_version: "{{ helm_latest_release.json.tag_name[1:] }}"
-  when: helm_version == "latest"
-
-- debug: msg="{{ helm_version }}"
-
-- name: Check if helm is installed
-  stat:
-    path: "{{ helm_install_dir }}/helm"
-  register: helm_is_installed
-
-- name: Gather currently installed helm version (if any)
-  command: >
-    {{ helm_install_dir }}/helm version --client --template '{{ if .Version }}{{ .Version }}{{ else }}{{ .Client.SemVer }}{{ end }}'
-  changed_when: false
-  register: helm_current_version
-  when: helm_is_installed.stat.exists
-
-- debug: msg="{{ helm_current_version }}"
-
-# - name: download Helm
-#   get_url:
-#     url: "{{ helm_mirror }}/{{ helm_redis_filename }}"
-#     dest: "{{ helm_download_dir }}/{{ helm_redis_filename }}"
-#     sha256sum: "{{ helm_sha256sum.content | b64decode | trim }}"
-#     force: no
-#     use_proxy: yes
-#     validate_certs: yes
-#     mode: "u=rw,go=r"
+- import_tasks: install.yml
+  when: (not helm_is_installed.stat.exists) or (helm_current_version.stdout != helm_version)
+  become: true

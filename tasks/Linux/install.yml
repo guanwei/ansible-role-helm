@@ -1,0 +1,29 @@
+---
+- name: Get Helm sha256sum
+  set_fact:
+    helm_sha256sum: "{{ lookup('url', 'https://get.helm.sh/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz.sha256') }}"
+  delegate_to: localhost
+
+- debug: msg="{{ helm_sha256sum }}"
+# - name: Download Helm
+#   get_url:
+#     url: "{{ helm_mirror }}/{{ helm_dist }}"
+#     dest: "/tmp/{{ helm_dist }}"
+#     checksum: "sha256:{{ node_exporter_checksum }}"
+#   register: _download_binary
+#   until: _download_binary is succeeded
+#   retries: 5
+#   delay: 2
+#   delegate_to: localhost
+#   become: false
+#   check_mode: false
+
+# - name: download Helm
+#   get_url:
+#     url: "{{ helm_mirror }}/{{ helm_redis_filename }}"
+#     dest: "{{ helm_download_dir }}/{{ helm_redis_filename }}"
+#     sha256sum: "{{ helm_sha256sum.content | b64decode | trim }}"
+#     force: no
+#     use_proxy: yes
+#     validate_certs: yes
+#     mode: "u=rw,go=r"
