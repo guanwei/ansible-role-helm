@@ -1,2 +1,6 @@
 ---
+# specific helm version format as v2.16.9
 helm_version: latest
+helm_repos:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com

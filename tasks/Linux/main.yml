@@ -3,3 +3,5 @@
 
 - import_tasks: install.yml
   when: (not helm_is_installed.stat.exists) or (helm_current_version.stdout != helm_version)
+
+- import_tasks: add-repos.yml
