@@ -1,7 +1,9 @@
-- name: Init Helm (client only)
+- name: Init Helm (client only) for current user
   shell: helm init --client-only
   when: helm_version.split('.')[0] == 'v2'
 
-- name: Add Helm chart repositories
-  shell: helm repo add {{ item.name }} {{ item.url }}
+- name: Add Helm chart repositories for current user
+  shell: helm repo add {{ helm_repo.name }} {{ helm_repo.url }}
   with_items: "{{ helm_repos }}"
+  loop_control:
+    loop_var: helm_repo
