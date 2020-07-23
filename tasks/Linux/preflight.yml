@@ -8,8 +8,9 @@
     body_format: json
     validate_certs: false
   register: helm_latest_release
-  until: helm_latest_release.status == 200
   retries: 3
+  delay: 2
+  until: helm_latest_release.status == 200
   when: helm_version == "latest"
 
 - name: Set Helm version to {{ helm_latest_release.json.tag_name }}
