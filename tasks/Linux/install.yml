@@ -10,10 +10,10 @@
     url: "https://get.helm.sh/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
     dest: "/tmp/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
     checksum: "sha256:{{ helm_sha256sum }}"
-  register: helm_download_package
   retries: 3
   delay: 2
-  until: helm_download_package is succeeded
+  register: result
+  until: result is succeeded
   delegate_to: localhost
   become: false
 

@@ -7,9 +7,9 @@
     status_code: 200
     body_format: json
     validate_certs: false
-  register: helm_latest_release
   retries: 3
   delay: 2
+  register: helm_latest_release
   until: helm_latest_release.status == 200
   when: helm_version == "latest"
 
