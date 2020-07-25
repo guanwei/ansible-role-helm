@@ -29,16 +29,12 @@
   file:
     path: /usr/local/bin
     state: directory
-    owner: root
-    group: root
-    mode: 0755
+    mode: "0755"
   become: true
 
 - name: Copy Helm binary to '/usr/local/bin'
   copy:
     src: "/tmp/{{ ansible_system | lower }}-{{ go_arch }}/helm"
     dest: "/usr/local/bin/helm"
-    owner: root
-    group: root
-    mode: 0755
+    mode: "0755"
   become: true
