@@ -1,9 +1,11 @@
 ---
 - import_tasks: preflight.yml
 
+- debug: msg="{{ helm_current_version.stdout }} == {{ helm_version }}"
+
 - name: Install Helm (helm major version can't smaller than current)
   include_tasks: install.yml
-  when: (not helm_is_installed.stat.exists) or (helm_current_version != helm_version and helm_current_version.stdout.split('.')[0] <= helm_version.split('.')[0])
+  when: (not helm_is_installed.stat.exists) or (helm_current_version.stdout != helm_version and helm_current_version.stdout.split('.')[0] <= helm_version.split('.')[0])
 
 - name: Add Helm repos
   include_tasks: add-repos.yml
