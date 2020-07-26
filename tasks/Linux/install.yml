@@ -20,8 +20,8 @@
 - name: Unpack Helm package
   unarchive:
     src: "/tmp/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
-    dest: "/tmp"
-    creates: "/tmp/{{ ansible_system | lower }}-{{ go_arch }}/helm"
+    dest: "/tmp/helm-{{ helm_version }}"
+    creates: "/tmp/helm-{{ helm_version }}/{{ ansible_system | lower }}-{{ go_arch }}/helm"
   delegate_to: localhost
   become: false
 
@@ -34,7 +34,7 @@
 
 - name: Copy Helm binary to '/usr/local/bin'
   copy:
-    src: "/tmp/{{ ansible_system | lower }}-{{ go_arch }}/helm"
+    src: "/tmp/helm-{{ helm_version }}/{{ ansible_system | lower }}-{{ go_arch }}/helm"
     dest: "/usr/local/bin/helm"
     mode: "0755"
   become: true

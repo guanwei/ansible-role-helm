@@ -7,3 +7,6 @@
   with_items: "{{ helm_repos }}"
   loop_control:
     loop_var: helm_repo
+
+- name: Update helm repos
+  shell: helm repo update
