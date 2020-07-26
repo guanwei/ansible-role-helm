@@ -13,10 +13,10 @@
   until: helm_latest_release.status == 200
   when: helm_version == "latest"
 
-- name: Set Helm version to {{ helm_latest_release.json.tag_name }}
+- name: Set Helm version to latest version
   set_fact:
     helm_version: "{{ helm_latest_release.json.tag_name }}"
-  when: helm_version == "latest"
+  when: helm_version == 'latest'
 
 - name: Check if Helm is installed
   stat:
