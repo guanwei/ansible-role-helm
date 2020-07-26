@@ -17,6 +17,12 @@
   delegate_to: localhost
   become: false
 
+- name: Create '/tmp/helm-{{ helm_version }}' directory if it does not exist
+  file:
+    path: /tmp/helm-{{ helm_version }}
+    state: directory
+    mode: "0755"
+
 - name: Unpack Helm package
   unarchive:
     src: "/tmp/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
