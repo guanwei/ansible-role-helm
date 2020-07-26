@@ -41,3 +41,8 @@
     dest: "/usr/local/bin/helm"
     mode: "0755"
   become: true
+
+- name: Install 2to3 plugin
+  shell: helm plugin install https://github.com/helm/helm-2to3.git
+  become: true
+  when: helm_version.split('.')[0] > 'v2'
