@@ -1,9 +1,15 @@
 ---
 - import_tasks: preflight.yml
 
-- name: Install Helm (helm major version can't smaller than current)
+- fail:
+    msg: Helm current version is {{ helm_current_version.stdout }}, want to install version is {{ helm_version }}. Helm only can be upgraded
+  when:
+    - helm_only_can_be_upgraded | bool
+    - helm_current_version.stdout > helm_version
+
+- name: Install Helm
   include_tasks: install.yml
-  when: (not helm_is_installed.stat.exists) or (helm_current_version.stdout != helm_version and helm_current_version.stdout.split('.')[0] <= helm_version.split('.')[0])
+  when: (not helm_is_installed.stat.exists) or (helm_current_version.stdout != helm_version)
 
 - name: Add Helm repos
   include_tasks: add-repos.yml
