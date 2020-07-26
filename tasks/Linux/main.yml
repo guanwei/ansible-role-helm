@@ -1,7 +1,8 @@
 ---
 - import_tasks: preflight.yml
 
-- fail:
+- name: Check if Helm only can be upgraded
+  fail:
     msg: Helm current version is {{ helm_current_version.stdout }}, want to install version is {{ helm_version }}. Helm only can be upgraded
   when:
     - helm_only_can_be_upgraded | bool
