@@ -1,0 +1,43 @@
+---
+- block:
+    - name: Get Helm sha256sum
+      set_fact:
+        helm_sha256sum: "{{ lookup('url', 'https://get.helm.sh/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz.sha256') }}"
+
+    - name: Download Helm package
+      get_url:
+        url: "https://get.helm.sh/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
+        dest: "/tmp/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
+        checksum: "sha256:{{ helm_sha256sum }}"
+      retries: 3
+      delay: 2
+      register: result
+      until: result is succeeded
+
+    - name: Create '/tmp/helm-{{ helm_version }}' directory if it does not exist
+      file:
+        path: /tmp/helm-{{ helm_version }}
+        state: directory
+        mode: "0755"
+
+    - name: Unpack Helm package
+      unarchive:
+        src: "/tmp/helm-{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
+        dest: "/tmp/helm-{{ helm_version }}"
+        creates: "/tmp/helm-{{ helm_version }}/{{ ansible_system | lower }}-{{ go_arch }}/helm"
+  delegate_to: localhost
+  become: false
+
+- name: Create '/usr/local/bin' directory if it does not exist
+  file:
+    path: /usr/local/bin
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Copy Helm binary to '/usr/local/bin'
+  copy:
+    src: "/tmp/helm-{{ helm_version }}/{{ ansible_system | lower }}-{{ go_arch }}/helm"
+    dest: "/usr/local/bin/helm"
+    mode: "0755"
+  become: true
