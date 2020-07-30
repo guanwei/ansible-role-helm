@@ -1,0 +1,8 @@
+---
+# specific helm version format as v2.16.9
+helm_version: latest
+helm_add_repos_for_current_user: true
+helm_only_can_be_upgraded: false
+helm_repos:
+  - name: stable
+    url: https://kubernetes-charts.storage.googleapis.com
