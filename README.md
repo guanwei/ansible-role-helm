@@ -44,8 +44,8 @@ None.
 requirements.yml
 ```
 - name: helm
-  src: ssh://tfsemea1.ta.philips.com:22/tfs/TPC_Region27/CDI_PT/_git/ansible-role-helm
-  version: dev
+  src: <repo_url>
+  version: <branch_name>
   scm: git
 ```
 
