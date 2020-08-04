@@ -15,15 +15,20 @@
 
 - name: Set Helm version to latest version
   set_fact:
-    helm_version: "{{ helm_latest_release.json.tag_name }}"
+    helm_version: "{{ helm_latest_release.json.tag_name | regex_replace('^v', '') }}"
   when: helm_version == 'latest'
 
 - name: Check current version
   command: >
     {{ helm_install_dir }}/helm version --client --template {{ "'{{ if .Version }}{{ .Version }}{{ else }}{{ .Client.SemVer }}{{ end }}'" }}
-  register: helm_current_version
+  register: helm_current_version_result
   failed_when: no
   changed_when: no
+
+- name: Set current version
+  set_fact:
+    helm_current_version: "{{ helm_current_version_result.stdout | regex_replace('^v', '') }}"
+  when: helm_current_version.rc == 0
 
 - name: Current version
   debug:
