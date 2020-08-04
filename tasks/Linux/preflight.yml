@@ -32,7 +32,7 @@
 
 - name: Current version
   debug:
-    msg: "{{ helm_current_version.stdout }}"
+    msg: "{{ helm_current_version }}"
   when: helm_current_version.rc == 0
 # - name: Check if Helm is installed
 #   stat:
