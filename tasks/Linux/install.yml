@@ -15,7 +15,7 @@
     src: "{{ helm_download_dir }}/{{ helm_redis_filename }}.sha256"
   register: helm_sha256sum
 
-- name: Download Helm
+- name: Download Helm package
   get_url:
     url: "{{ helm_mirror }}/{{ helm_redis_filename }}"
     dest: "{{ helm_download_dir }}/{{ helm_redis_filename }}"
@@ -49,7 +49,7 @@
     state: present
   become: true
 
-- name: Install Helm
+- name: Unpack Helm package
   unarchive:
     src: "{{ helm_download_dir }}/{{ helm_redis_filename }}"
     remote_src: yes
