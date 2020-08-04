@@ -1,6 +1,16 @@
 ---
-# specific helm version format as v2.16.9
+# Helm version number, specific Helm version format as 2.16.9
 helm_version: latest
+
+# Mirror to download Helm from
+helm_mirror: "https://get.helm.sh"
+
+# Dir where Helm should be installed
+helm_install_dir: "/opt/helm"
+
+# Directory to store files downloaded for Helm
+helm_download_dir: "{{ x_ansible_download_dir | default(ansible_env.HOME + '/.ansible/tmp/downloads') }}"
+
 helm_add_repos_for_current_user: true
 helm_only_can_be_upgraded: false
 helm_repos:
