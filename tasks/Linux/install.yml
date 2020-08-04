@@ -1,20 +1,19 @@
 ---
+- name: Create download directory
+  file:
+    dest: "{{ helm_download_dir }}"
+    state: directory
+    mode: "0755"
+
 - name: Download Helm sha256sum
   get_url:
     url: "{{ helm_mirror }}/{{ helm_redis_filename }}.sha256"
     dest: "{{ helm_download_dir }}/{{ helm_redis_filename }}.sha256"
-  become: true
 
 - name: Read Helm sha256sum
   slurp:
     src: "{{ helm_download_dir }}/{{ helm_redis_filename }}.sha256"
   register: helm_sha256sum
-  become: true
-
-# - name: Get Helm sha256sum
-#   set_fact:
-#     helm_sha256sum: "{{ lookup('url', '{{ helm_mirror }}/{{ helm_redis_filename }}.sha256') }}"
-#   become: true
 
 - name: Download Helm
   get_url:
@@ -25,7 +24,6 @@
   delay: 2
   register: result
   until: result is succeeded
-  become: true
 
 - name: Create the Helm installation dir
   file:
