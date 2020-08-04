@@ -25,10 +25,18 @@
   register: result
   until: result is succeeded
 
+- name: Remove existing installation dir
+  file:
+    path: "{{ helm_install_dir }}"
+    state: absent
+  become: yes
+
 - name: Create the Helm installation dir
   file:
     path: "{{ helm_install_dir }}"
     state: directory
+    owner: root
+    group: root
     mode: "0755"
   become: true
 
@@ -50,6 +58,7 @@
       - "--strip-components=1"
     owner: root
     group: root
+    creates: "{{ helm_install_dir }}/helm"
   become: true
 
 - name: Create Helm link
