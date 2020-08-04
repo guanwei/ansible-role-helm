@@ -50,7 +50,6 @@
       - "--strip-components=1"
     owner: root
     group: root
-    creates: "{{ helm_install_dir }}/helm"
   become: true
 
 - name: Create Helm link
