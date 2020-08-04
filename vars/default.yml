@@ -10,3 +10,6 @@ go_arch_map:
   armv7l: "armv7"
 
 go_arch: "{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}"
+
+# File name of the Helm redistributable file
+helm_redis_filename: "helm-v{{ helm_version }}-{{ ansible_system | lower }}-{{ go_arch }}.tar.gz"
