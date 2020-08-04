@@ -29,18 +29,3 @@
   set_fact:
     helm_current_version: "{{ helm_current_version_result.stdout | regex_replace('^v', '') }}"
   when: helm_current_version_result.rc == 0
-
-- name: Current version
-  debug:
-    msg: "{{ helm_current_version }}"
-  when: helm_current_version_result.rc == 0
-# - name: Check if Helm is installed
-#   stat:
-#     path: "/usr/local/bin/helm"
-#   register: helm_is_installed
-
-# - name: Gather currently installed Helm version
-#   shell: /usr/local/bin/helm version --client | awk -F'"' '{print $2}'
-#   changed_when: false
-#   register: helm_current_version
-#   when: helm_is_installed.stat.exists

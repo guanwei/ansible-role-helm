@@ -3,17 +3,15 @@
 
 - name: Check wether Helm only can be upgraded
   fail:
-    msg: Helm current version is {{ helm_current_version.stdout }}, want to install version is {{ helm_version }}. Helm only can be upgraded
+    msg: Helm current version is {{ helm_current_version }}, want to install version is {{ helm_version }}. Helm only can be upgraded
   when:
-    - helm_current_version.rc == 0
-    #- helm_is_installed.stat.exists
+    - helm_current_version is defined
     - helm_only_can_be_upgraded | bool
-    - helm_current_version.stdout > ('v' + helm_version)
+    - helm_current_version is version(helm_version, '>')
 
 - name: Install Helm
   include_tasks: install.yml
-  #when: (not helm_is_installed.stat.exists) or (helm_current_version.stdout != helm_version)
-  when: (helm_current_version.rc != 0) or (helm_current_version.stdout != ('v' + helm_version))
+  when: (helm_current_version is not defined) or (helm_current_version != helm_version)
 
 - name: Add Helm repos
   include_tasks: add-repos.yml
