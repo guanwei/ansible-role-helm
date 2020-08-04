@@ -60,4 +60,5 @@
     state: link
     owner: root
     group: root
+    force: true
   become: yes
