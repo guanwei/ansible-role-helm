@@ -19,7 +19,7 @@
   when: helm_version == 'latest'
 
 - name: Check current version
-  command: >
+  shell: |
     {{ helm_install_dir }}/helm version --client --template {{ "'{{ if .Version }}{{ .Version }}{{ else }}{{ .Client.SemVer }}{{ end }}'" }}
   register: helm_current_version_result
   failed_when: no
