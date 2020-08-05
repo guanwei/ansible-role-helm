@@ -65,5 +65,5 @@
     owner: root
     group: root
     force: true
-  when: helm_install_dir not in ['/usr/local/sbin','/usr/local/bin','/usr/sbin','/usr/bin','/sbin','/bin']
+  when: helm_install_dir not in ansible_env.PATH.split(':')
   become: yes
