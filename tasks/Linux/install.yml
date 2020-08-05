@@ -38,7 +38,7 @@
   unarchive:
     src: "{{ helm_download_dir }}/{{ helm_redis_filename }}"
     dest: "{{ helm_download_dir }}"
-    remote_src: yes
+    remote_src: true
 
 - name: Create the Helm installation dir
   file:
@@ -53,6 +53,7 @@
   copy:
     src: "{{ helm_download_dir }}/{{ ansible_system | lower }}-{{ go_arch }}/helm"
     dest: "{{ helm_install_dir }}/helm"
+    remote_src: true
     mode: "0755"
   become: true
 
