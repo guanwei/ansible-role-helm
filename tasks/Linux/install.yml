@@ -44,8 +44,6 @@
   file:
     path: "{{ helm_install_dir }}"
     state: directory
-    owner: root
-    group: root
     mode: "0755"
   become: true
 
@@ -62,8 +60,6 @@
     src: "{{ helm_install_dir }}/helm"
     dest: "/usr/local/bin/helm"
     state: link
-    owner: root
-    group: root
     force: true
   when: helm_install_dir not in ansible_env.PATH.split(':')
   become: yes
