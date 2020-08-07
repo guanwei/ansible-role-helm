@@ -26,7 +26,7 @@
   until: result is succeeded
 
 - name: Install unarchive module dependencies
-  apt:
+  package:
     name:
       - tar
       - unzip
