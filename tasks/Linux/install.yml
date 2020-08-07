@@ -55,6 +55,8 @@
     mode: "0755"
   become: true
 
+- debug: msg="{{ ansible_env.PATH.split(':') }}"
+
 - name: Create Helm link
   file:
     src: "{{ helm_install_dir }}/helm"
