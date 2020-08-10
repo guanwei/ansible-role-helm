@@ -1,6 +1,4 @@
 ---
-- debug: msg="{{ helm_version.split('.')[0] }}"
-
 - name: Init Helm (client only) for current user
   shell: helm init --client-only
   when: helm_version.split('.')[0] == '2'
