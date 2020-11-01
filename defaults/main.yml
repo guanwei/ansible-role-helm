@@ -17,4 +17,4 @@ helm_add_repos_for_current_user: true
 
 helm_repos:
   - name: stable
-    url: https://kubernetes-charts.storage.googleapis.com
+    url: https://charts.helm.sh/stable
